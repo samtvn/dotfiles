@@ -12,7 +12,7 @@ setopt hist_find_no_dups
 bindkey -e
 
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/sam/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit
 compinit
 
@@ -21,6 +21,7 @@ setopt auto_cd
 
 # Locale Variables
 export LC_ALL=C
+export PATH=$PATH:$HOME/.local/bin
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
