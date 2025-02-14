@@ -2,6 +2,7 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=500
 SAVEHIST=1000
+setopt PROMPT_SUBST
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -20,7 +21,8 @@ compinit
 setopt auto_cd
 
 # Locale Variables
-export LC_ALL=C
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 export PATH=$PATH:$HOME/.local/bin
 export XDG_CONFIG_HOME="$HOME/.config"
 
@@ -48,11 +50,6 @@ fi
 
 # fzf
 
-# Starship
-
-# OhMyPosh
-eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh.json)"
-
 # Pyenv
 if [[ "$(uname)" == "Darwin" ]]; then
     export PYENV_ROOT="$HOME/.pyenv"
@@ -72,3 +69,10 @@ else
 fi
 
 fastfetch
+
+# Starship
+export STARSHIP_SHELL="zsh"
+eval "$(starship init zsh)"
+
+# OhMyPosh
+# eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh.json)"
