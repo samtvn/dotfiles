@@ -51,7 +51,7 @@ fi
 # Starship
 
 # OhMyPosh
-eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh.toml)"
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh.json)"
 
 # Pyenv
 if [[ "$(uname)" == "Darwin" ]]; then
