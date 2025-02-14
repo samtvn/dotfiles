@@ -64,4 +64,11 @@ fi
 # bun completions
 [ -s "/Users/sam/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+# Ghostty
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    ln -sf "$HOME/.config/ghostty/config.macos" "$HOME/.config/ghostty/config"
+else
+    ln -sf "$HOME/.config/ghostty/config.linux" "$HOME/.config/ghostty/config"
+fi
+
 fastfetch
