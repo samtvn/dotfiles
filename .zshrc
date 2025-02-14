@@ -21,12 +21,8 @@ setopt auto_cd
 
 # Locale Variables
 export LC_ALL=C
-<<<<<<< HEAD
 export PATH=$PATH:$HOME/.local/bin
-=======
 export XDG_CONFIG_HOME="$HOME/.config"
-
->>>>>>> 9de178b (change .zshrc)
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -54,18 +50,18 @@ fi
 
 # Starship
 
-
 # OhMyPosh
-export OMP_INSTALL="$HOME/.ohmyposh"
-export PATH=$OMP_INSTALL/bin:$PATH
-eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh.toml)"
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh.toml)"
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# Pyenv
+if [[ "$(uname)" == "Darwin" ]]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 # bun completions
-[ -s "/Users/sam/.bun/_bun" ] && source "/Users/sam/.bun/_bun"
+[ -s "/Users/sam/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 fastfetch
