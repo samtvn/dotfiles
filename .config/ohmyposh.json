@@ -38,7 +38,7 @@
 			"properties": {
 				"cache_duration": "none"
 			}
-		},{
+		}, {
 			"leading_diamond": "",
 			"trailing_diamond": " ",
 			"foreground": "p:fg",
@@ -69,7 +69,7 @@
 	}, {
 		"type": "prompt",
 		"alignment":"right",
-	
+
 		"segments": [{
 			"leading_diamond": "",
 			"trailing_diamond": " ",
