@@ -1,0 +1,67 @@
+[init]
+	defaultBranch = main
+
+[user]
+	name = samtvn
+	email = horned-bacon0@icloud.com
+  signingkey = /Users/sam/.ssh/SamGithub
+
+[core]
+  compression = 9
+  whitespace = error
+  preloadindex = true
+  editor = code --wait
+  pager = delta
+
+[feature]
+  manyFiles = true  # index v4 + untracked cache
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true  # n/N to jump between files
+
+[advice]
+  addEmptyPathspec= false
+  pushNonFastForward = false
+  statusHints = false
+
+[status]
+  branch = true
+  showStash = true
+  showUntrackedFiles = all
+
+[diff]
+  context = 3
+  renames = copies
+  interHunkContext = 10
+
+[gpg]
+	format = ssh
+
+[commit]
+	gpgsign = true
+
+[push]
+  autoSetupRemote = true  # easier to push new branches
+  default = current  # push only current branch by default
+  followTags = true  # push also tags
+
+[pull]
+  rebase = true
+
+[submodule]
+  fetchJobs = 16
+
+[rebase]
+  autoStash = true
+
+[color "diff"]
+  meta = black bold
+  frag = magenta
+  context = white
+  whitespace = yellow reverse
+  old = red
+[gpg "ssh"]
+	program = ssh-keygen

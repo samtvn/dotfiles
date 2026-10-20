@@ -1,0 +1,31 @@
+# Shared settings. Platform-specific bits live in config.macos / config.linux;
+# platform.conf is a symlink to one of them, created by $ZDOTDIR/.zprofile.
+
+cursor-click-to-move = true
+
+font-family="Monaspace Argon"
+font-family-bold="Monaspace Krypton"
+font-family-italic="Monaspace Argon"
+font-family-bold-italic="Monaspace Krypton"
+font-feature=calt, ss01, ss02, ss03, ss04, ss05, ss06, ss07, ss08, ss09, liga
+window-title-font-family="Monaspace Xenon"
+
+background-opacity=0.85
+background-blur-radius=40
+unfocused-split-opacity=0.85
+
+window-padding-x = 10
+window-save-state = always
+window-new-tab-position = current
+
+link-url = 1
+
+quit-after-last-window-closed = true
+
+# Shell integration switches between a bar at the prompt and a block while commands run
+cursor-style-blink=false
+cursor-style=block
+
+auto-update = check
+
+config-file = ?platform.conf

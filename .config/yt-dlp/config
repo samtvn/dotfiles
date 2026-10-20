@@ -1,0 +1,2 @@
+#Format specifier
+-f "bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4] / bv*+ba/b"

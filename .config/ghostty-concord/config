@@ -1,0 +1,5 @@
+initial-command = /opt/homebrew/bin/concord
+quit-after-last-window-closed = true
+
+macos-icon = custom
+macos-custom-icon = /Users/sam/.config/ghostty-concord/Concord.png

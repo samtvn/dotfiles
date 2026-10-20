@@ -1,0 +1,75 @@
+{
+  "profiles" : [
+    {
+      "id" : "72457813-8747-4FC7-A68B-2F4D36B9BFAA",
+      "name" : "Default",
+      "workspaces" : [
+        {
+          "apps" : [
+            {
+              "bundleIdentifier" : "org.mozilla.firefox",
+              "iconPath" : "/Applications/Firefox.app/Contents/Resources/firefox.icns",
+              "name" : "Firefox"
+            },
+            {
+              "bundleIdentifier" : "com.microsoft.Excel",
+              "iconPath" : "/Applications/Microsoft Excel.app/Contents/Resources/XCEL.icns",
+              "name" : "Microsoft Excel"
+            },
+            {
+              "bundleIdentifier" : "com.microsoft.Powerpoint",
+              "iconPath" : "/Applications/Microsoft PowerPoint.app/Contents/Resources/PPT3.icns",
+              "name" : "Microsoft PowerPoint"
+            },
+            {
+              "bundleIdentifier" : "com.microsoft.Word",
+              "iconPath" : "/Applications/Microsoft Word.app/Contents/Resources/MSWD.icns",
+              "name" : "Microsoft Word"
+            },
+            {
+              "bundleIdentifier" : "abnerworks.Typora",
+              "iconPath" : "/Applications/Typora.app/Contents/Resources/AppIcon.icns",
+              "name" : "Typora"
+            }
+          ],
+          "display" : "Built-in Retina Display",
+          "id" : "8F310BE4-0820-434A-91E9-3EA09E1D3D86",
+          "name" : "LHoFT",
+          "shortcut" : "opt+2"
+        },
+        {
+          "apps" : [
+            {
+              "bundleIdentifier" : "com.microsoft.VSCode",
+              "iconPath" : "/Applications/Visual Studio Code.app/Contents/Resources/Code.icns",
+              "name" : "Code"
+            },
+            {
+              "bundleIdentifier" : "org.mozilla.nightly",
+              "iconPath" : "/Applications/Firefox Nightly.app/Contents/Resources/firefox.icns",
+              "name" : "Firefox Nightly"
+            },
+            {
+              "bundleIdentifier" : "com.hnc.Discord",
+              "iconPath" : "/Applications/Discord.app/Contents/Resources/electron.icns",
+              "name" : "Discord"
+            }
+          ],
+          "display" : "Built-in Retina Display",
+          "id" : "73B6BE4D-4D10-479D-A2EF-45530A59CD95",
+          "name" : "42",
+          "shortcut" : "opt+1",
+          "symbolIconName" : "person.circle"
+        }
+      ]
+    },
+    {
+      "id" : "F7D437AD-071A-47A7-BDB4-2B3E6C0408FB",
+      "name" : "none",
+      "workspaces" : [
+
+      ]
+    }
+  ],
+  "selectedProfileId" : "F7D437AD-071A-47A7-BDB4-2B3E6C0408FB"
+}
