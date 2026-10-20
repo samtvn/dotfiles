@@ -137,16 +137,37 @@ alias as='alias | grep' # Search aliases
 alias ar='unalias' # Remove given alias
 
 # System Monitoring
-alias meminfo='top -l 1 -s 0 | grep PhysMem' # Show free and used memory
-alias memhog='ps -Ao pid,ppid,%mem,comm -m | head' # Processes consuming most mem
-alias cpuhog='ps -Ao pid,ppid,%cpu,comm -r | head' # Processes consuming most cpu
-alias cpuinfo='sysctl -n machdep.cpu.brand_string' # Show CPU Info
-alias distro='sw_vers' # Show OS info
-alias ports='lsof -iTCP -sTCP:LISTEN -nP' # Show listening ports (prefix with sudo for all users)
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias meminfo='top -l 1 -s 0 | grep PhysMem' # Show free and used memory
+  alias memhog='ps -Ao pid,ppid,%mem,comm -m | head' # Processes consuming most mem
+  alias cpuhog='ps -Ao pid,ppid,%cpu,comm -r | head' # Processes consuming most cpu
+  alias cpuinfo='sysctl -n machdep.cpu.brand_string' # Show CPU Info
+  alias distro='sw_vers' # Show OS info
+  alias ports='lsof -iTCP -sTCP:LISTEN -nP' # Show listening ports (prefix with sudo for all users)
+else
+  alias meminfo='free -h' # Show free and used memory
+  alias memhog='ps -eo pid,ppid,%mem,comm --sort=-%mem | head' # Processes consuming most mem
+  alias cpuhog='ps -eo pid,ppid,%cpu,comm --sort=-%cpu | head' # Processes consuming most cpu
+  alias cpuinfo="grep -m1 'model name' /proc/cpuinfo | cut -d: -f2-" # Show CPU Info
+  alias distro='cat /etc/os-release' # Show OS info
+  alias ports='ss -tlnp' # Show listening ports (prefix with sudo for all users)
+fi
 
-# Copy / pasting
-alias cpwd='pwd | pbcopy' # Copy current path
-alias pa='pbpaste' # Paste clipboard contents
+# Copy / pasting (pbcopy on macOS, wl-copy on Wayland, xclip on X11)
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias clipcopy='pbcopy' clippaste='pbpaste'
+elif [[ -n "$WAYLAND_DISPLAY" ]]; then
+  alias clipcopy='wl-copy' clippaste='wl-paste'
+else
+  alias clipcopy='xclip -selection clipboard' clippaste='xclip -selection clipboard -o'
+fi
+alias cpwd='pwd | clipcopy' # Copy current path
+alias pa='clippaste' # Paste clipboard contents
+
+# macOS-style 'open' on Linux
+if [[ "$OSTYPE" == linux* ]] && ! command_exists open; then
+  alias open='xdg-open'
+fi
 
 # App Specific
 if command_exists code ; then; alias vsc='code .'; fi # Launch VS Code in current dir

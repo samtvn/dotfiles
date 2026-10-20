@@ -23,30 +23,41 @@ if [[ -d $ZDOTDIR ]]; then
   source ${ZDOTDIR}/lib/navigation.zsh
 fi
 
+# Source the first plugin file found in the usual install locations:
+# Homebrew, Arch (/usr/share/zsh/plugins), Debian (/usr/share), or a manual clone in $XDG_DATA_HOME/zsh/plugins.
+# Usage: load_plugin <file> <dir-name>...   (dir names differ between package managers)
+load_plugin() {
+  local file=$1 dir base; shift
+  for base in ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/share} /usr/share/zsh/plugins /usr/share $XDG_DATA_HOME/zsh/plugins; do
+    for dir in "$@"; do
+      [[ -r $base/$dir/$file ]] && { source $base/$dir/$file; return 0; }
+    done
+  done
+  return 1
+}
+
 # Starship
-eval "$(starship init zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # zoxide
-eval "$(zoxide init --cmd cd zsh)"
+(( $+commands[zoxide] )) && eval "$(zoxide init --cmd cd zsh)"
 
 # fzf (Ctrl+T files, Alt+C dirs; Ctrl+R is rebound by atuin below)
-source <(fzf --zsh) 2>/dev/null
+(( $+commands[fzf] )) && source <(fzf --zsh) 2>/dev/null
 
-# Plugins (brew install fzf-tab zsh-you-should-use zsh-autosuggestions zsh-fast-syntax-highlighting)
+# Plugins. macOS: brew install fzf-tab zsh-you-should-use zsh-autosuggestions zsh-fast-syntax-highlighting
+# Arch: pacman -S zsh-autosuggestions; yay -S fzf-tab-git zsh-you-should-use zsh-fast-syntax-highlighting
 # fzf-tab must come after fzf so it owns Tab; syntax highlighting is sourced last (below).
-_brew_share=/opt/homebrew/share
-[[ -r $_brew_share/fzf-tab/fzf-tab.zsh ]] && source $_brew_share/fzf-tab/fzf-tab.zsh
-[[ -r $_brew_share/zsh-you-should-use/you-should-use.plugin.zsh ]] && source $_brew_share/zsh-you-should-use/you-should-use.plugin.zsh
-[[ -r $_brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $_brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh
-unset _brew_share
+load_plugin fzf-tab.zsh fzf-tab fzf-tab-git
+load_plugin you-should-use.plugin.zsh zsh-you-should-use
+load_plugin zsh-autosuggestions.zsh zsh-autosuggestions
 
-eval "$(mise activate zsh)"
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
-eval "$(atuin init zsh)"
+(( $+commands[atuin] )) && eval "$(atuin init zsh)"
 
 # Must be sourced after everything that defines widgets
-[[ -r /opt/homebrew/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ]] && \
-  source /opt/homebrew/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+load_plugin fast-syntax-highlighting.plugin.zsh zsh-fast-syntax-highlighting fast-syntax-highlighting
 
 # Welcome message in the first Ghostty shell only (not in nested shells or other terminals)
 if [[ $TERM_PROGRAM == ghostty && $SHLVL -le 1 ]] && (( $+commands[fastfetch] )); then

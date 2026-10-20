@@ -4,7 +4,7 @@
 [user]
 	name = samtvn
 	email = horned-bacon0@icloud.com
-  signingkey = /Users/sam/.ssh/SamGithub
+  signingkey = ~/.ssh/SamGithub
 
 [core]
   compression = 9
