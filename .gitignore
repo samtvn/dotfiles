@@ -28,3 +28,12 @@ platform.conf
 .config/homebrew/
 .config/rest-client/
 .config/Autodesk/
+
+# Auto-generated configs from tools/apps (recreated on first run; not worth versioning)
+.config/btop/
+.config/dlv/
+.config/flashspace/
+.config/glow/
+.config/lazygit/
+.config/mole/
+.config/superfile/
