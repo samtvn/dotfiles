@@ -17,13 +17,9 @@ alias card='cargo doc'
 
 alias carbr='cargo build --release'
 alias carrr='cargo run --release'
-alias carws='cargo workspace'
-alias carwsl='cargo workspace list'
 alias carad='cargo add'
-alias carrm='cargo rm'
+alias carrm='cargo remove'
 alias carp='cargo publish'
-alias carau='cargo audit'
-alias cargen='cargo generate --git'
 alias carfmt='cargo fmt'
 
 # Rustup Commands
@@ -41,7 +37,7 @@ search_crates() {
 }
 
 # Alias for opening Rust documentation
-alias rustdoc='open https://doc.rust-lang.org'
+alias rust-docs='open https://doc.rust-lang.org' # Not 'rustdoc': that would shadow the real tool
 
 # Alias for opening The Rust Programming Language book
 alias rustbook='open https://doc.rust-lang.org/book/'
@@ -50,11 +46,8 @@ alias rustbook='open https://doc.rust-lang.org/book/'
 update_rust() {
     rustup update
     rustup self update
-    cargo install-update -a
+    (( $+commands[cargo-install-update] )) && cargo install-update -a
 }
-
-# Alias for running Rust programs with Valgrind (if installed)
-alias rvalgrind='valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes'
 
 # Helper to clean up target directory in all workspaces
 clean_rust_workspace() {

@@ -9,15 +9,11 @@ alias_not_used () {
 
 # Single-letter aliases, for frequently used basics, only if not already set
 if alias_not_used a; then; alias a='alias'; fi
-if alias_not_used c; then; alias c='clear'; fi
-if alias_not_used d; then; alias d='date'; fi
 if alias_not_used e; then; alias e='exit'; fi
 if alias_not_used f; then; alias f='find'; fi
-if alias_not_used g; then; alias g='grep'; fi
 if alias_not_used h; then; alias h='history'; fi
 if alias_not_used i; then; alias i='id'; fi
 if alias_not_used j; then; alias j='jobs'; fi
-if alias_not_used l; then; alias l='ls'; fi
 if alias_not_used m; then; alias m='man'; fi
 if alias_not_used n; then; alias n='nc'; fi
 if alias_not_used p; then; alias p='pwd'; fi
@@ -40,6 +36,7 @@ if command_exists eza ; then
   lm() { eza -laF --sort=modified --icons "$@" }
   lb() { eza -laF --sort=size --icons "$@" }
 else
+  alias l='ls'
   alias la='ls -A'
   ll() { ls -lAFh "$@" }
   alias lb='ls -lhSA'
@@ -56,20 +53,13 @@ ls-archive () {
     echo "File not found"
     return;
   fi
-  ext="${1##*.}"
-  if [ $ext = 'zip' ]; then
-    unzip -l $1
-  elif [ $ext = 'rar' ]; then
-    unrar l $1
-  elif [ $ext = 'tar' ]; then
-    tar tf $1
-  elif [ $ext = 'tar.gz' ]; then
-    echo $1
-  elif [ $ext = 'ace' ]; then
-    unace l $1
-  else
-    echo "Unknown Archive Format"
-  fi
+  case "$1" in
+    *.zip) unzip -l "$1" ;;
+    *.rar) unrar l "$1" ;;
+    *.tar|*.tar.gz|*.tgz|*.tar.bz2|*.tbz2|*.tar.xz) tar tf "$1" ;;
+    *.7z) 7za l "$1" ;;
+    *) echo "Unknown Archive Format" ;;
+  esac
 }
 
 alias lz='ls-archive'
@@ -106,7 +96,7 @@ alias c.='cd ..'
 alias c..='cd ../../'
 alias c...='cd ../../../'
 alias c....='cd ../../../../'
-alias c.....='cd ../../../../'
+alias c.....='cd ../../../../../'
 alias cg='cd `git rev-parse --show-toplevel`' # Base of git project
 
 # Finding files and directories
@@ -117,41 +107,24 @@ alias fdir='fd --type d'
 (( $+commands[fd] )) || alias fd='find . -type d -name' # Find direcroy by name
 
 # Command line history
-alias h='history' # Shows full history
 alias h-search='fc -El 0 | grep' # Searchses for a word in terminal history
 alias top-history='history 0 | awk '{print $2}' | sort | uniq -c | sort -n -r | head' 
 alias histrg='history -500 | rg' # Rip grep search recent history
 
-# Fuzzy search through command history with Ctrl+R
-if [[ ! "$terminfo[kcuu1]" ]]; then
-  bindkey '^R' fzf-history-widget
-fi
-
-fzf-history-widget() {
-  local selected_command=$(fc -rl 1 | fzf --height 40% --reverse --tac | sed -E 's/ *[0-9]+\*? +//')
-  LBUFFER="$selected_command"
-  zle redisplay
-}
-zle -N fzf-history-widget
+# Ctrl+R is handled by atuin (see .zshrc)
 
 # Clearing terminal
-if command_exists hr ; then
-  alias c='clear && hr_color='\033[0;37m' && hr'
-else
-  alias c='clear'
-fi
+alias c='clear'
 
 # Command line head / tail shortcuts
 alias -g H='| head' # Pipes output to head (the first part of a file)
 alias -g T='| tail' # Pipes output to tail (the last part of a file)
 alias -g G='| grep' # Pipes output to grep to search for some word
 alias -g L="| less" # Pipes output to less, useful for paging
-alias -g M="| most" # Pipes output to more, useful for paging
 alias -g LL="2>&1 | less" # Writes stderr to stdout and passes it to less
 alias -g CA="2>&1 | cat -A" # Writes stderr to stdout and passes it to cat
 alias -g NE="2> /dev/null" # Silences stderr
 alias -g NUL="> /dev/null 2>&1" # Silences both stdout and stderr
-alias -g P="2>&1| pygmentize -l pytb" # Writes stderr to stdout, and passes to pygmentize
 
 # Use color diff, if availible
 if command_exists colordiff ; then
@@ -165,11 +138,11 @@ alias ar='unalias' # Remove given alias
 
 # System Monitoring
 alias meminfo='top -l 1 -s 0 | grep PhysMem' # Show free and used memory
-alias memhog='ps -eo pid,ppid,cmd,%mem --sort=-%mem | head' # Processes consuming most mem
-alias cpuhog='ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head' # Processes consuming most cpu
+alias memhog='ps -Ao pid,ppid,%mem,comm -m | head' # Processes consuming most mem
+alias cpuhog='ps -Ao pid,ppid,%cpu,comm -r | head' # Processes consuming most cpu
 alias cpuinfo='sysctl -n machdep.cpu.brand_string' # Show CPU Info
-alias distro='cat /etc/*-release' # Show OS info
-alias ports='sudo lsof -iVP -n | grep LISTEN' # Show open ports
+alias distro='sw_vers' # Show OS info
+alias ports='lsof -iTCP -sTCP:LISTEN -nP' # Show listening ports (prefix with sudo for all users)
 
 # Copy / pasting
 alias cpwd='pwd | pbcopy' # Copy current path
@@ -195,15 +168,13 @@ alias hackernews='curl hkkr.in'
 alias worldinternet='curl https://status.plaintext.sh/t'
 
 # Random lolz
-alias clear='clear && fastfetch'
 alias cls='clear;ls' # Clear and ls
 alias plz="fc -l -1 | cut -d' ' -f2- | xargs sudo" # Re-run last cmd as root
-alias yolo='git add .; git commit -m "YOLO"; git push origin master'
+alias yolo='git add .; git commit -m "YOLO"; git push'
 alias when='date' # Show date
 alias whereami='pwd'
 alias cat='bat'
 alias gtfo='exit'
 
-# Alias for install script
-alias dotfiles="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}/install.sh"
-alias dots="dotfiles"
+# Jump to the dotfiles repo
+alias dots='cd ~/.dotfiles'

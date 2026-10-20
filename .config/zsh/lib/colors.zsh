@@ -1,6 +1,7 @@
-if type -p dircolors &>/dev/null; then
-    #  Enable custom colors if it exists.
-    [ -e "${XDG_CONFIG_HOME}/dircolors" ] && \
-    eval "$(dircolors -b "${XDG_CONFIG_HOME}/dircolors")" || \
-    eval "$(dircolors -b)"
+# LS_COLORS for eza, fd, and the completion menu (macOS has no dircolors)
+if (( $+commands[vivid] )); then
+  export LS_COLORS="$(vivid generate catppuccin-macchiato)"
 fi
+
+# Colored output for BSD ls
+export CLICOLOR=1

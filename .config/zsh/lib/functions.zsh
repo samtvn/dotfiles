@@ -18,3 +18,24 @@ extract() {
         esac
     fi
 }
+
+# Unlock Bitwarden
+function bwu() {
+    # Attempt to grab the session key from macOS Keychain
+    export BW_SESSION=$(security find-generic-password -a $USER -s BW_SESSION -w 2>/dev/null)
+
+    # Check if the Bitwarden vault is successfully unlocked
+    if bw status | grep -q '"status":"unlocked"'; then
+        echo "🔓 Bitwarden vault unlocked via Keychain!"
+    else
+        echo "🔒 Vault locked or session expired. Enter Master Password:"
+        # Prompt for password and output raw session key
+        export BW_SESSION=$(bw unlock --raw)
+
+        # If unlocking was successful, update the Keychain
+        if [ -n "$BW_SESSION" ]; then
+            security add-generic-password -a $USER -s BW_SESSION -w "$BW_SESSION" -U
+            echo "✅ Session key saved to macOS Keychain."
+        fi
+    fi
+}

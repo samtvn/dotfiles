@@ -1,0 +1,30 @@
+# macOS junk
+.DS_Store
+
+# zsh runtime files (history, Apple Terminal sessions, completion cache)
+.zsh_history
+.zsh_sessions/
+.zcompcache/
+.zcompdump*
+
+# App state and credentials that must never reach a public repo
+.config/1Password/
+.config/concord/
+.config/configstore/
+.config/containers/
+.config/docker/
+.config/gh/hosts.yml
+.config/raycast/
+.config/opencode/node_modules/
+.config/opencode/package-lock.json
+platform.conf
+
+# Logs, backups, caches and app state (not config)
+*.log
+*.bak
+.config/karabiner/automatic_backups/
+.config/swiftpm/
+.config/wireshark/
+.config/homebrew/
+.config/rest-client/
+.config/Autodesk/

@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
-# Configure history file.
-HISTFILE="${XDG_CACHE_HOME}/zsh/.zsh_history"
-HISTSIZE=50000
-HISTFILESIZE=50000
-SAVEHIST=10000
+# Configure history file (state, not cache: cleaners are allowed to wipe ~/.cache)
+HISTFILE="${XDG_STATE_HOME}/zsh/history"
+[[ -d ${HISTFILE:h} ]] || mkdir -p ${HISTFILE:h}
+HISTSIZE=60000 # Must exceed SAVEHIST for hist_expire_dups_first
+SAVEHIST=50000
 
 # History command configuration.
 setopt extended_history       # Record timestamp of command in $HISTFILE.
@@ -15,5 +15,4 @@ setopt hist_find_no_dups      # Ignore duplicates when searching in history.
 setopt hist_ignore_space      # Ignore commands that start with a space.
 setopt hist_reduce_blanks     # Remove superfluous blanks from history items.
 setopt hist_verify            # Show command with history expansion to user before running it.
-setopt inc_append_history     # Add commands to $HISTFILE in order of execution.
-setopt share_history          # Share history between different instances of the shell. 
+setopt share_history          # Share history between instances (also appends incrementally).

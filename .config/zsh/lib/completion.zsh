@@ -6,7 +6,7 @@ zstyle ':completion::complete:*'    cache-path          "${ZDOTDIR:-$HOME}/.zcom
 
 # Configure matches and grouping in completion menu.
 zstyle ':completion:*'              matcher-list        'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*' # Enable case insensitive completion.
-zstyle ':completion:*:*:*:*:*'      menu                select                                      # Enable highlighting in menu.
+zstyle ':completion:*'              menu                no                                          # fzf-tab replaces the menu.
 zstyle ':completion:*:options'      auto-description    '%d'
 zstyle ':completion:*:options'      description         yes
 zstyle ':completion:*:matches'      group               yes                                         # Separate matches in menu into groups.
@@ -26,12 +26,10 @@ zstyle ':completion:*'              special-dirs        yes                 # En
 # Configure completion of 'kill' command.
 zstyle ':completion:*:*:*:*:processes'      command             'ps -u $USER -o pid,user,command -w'
 zstyle ':completion:*:*:kill:*:processes'   list-colors         '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:kill:*'             menu                yes select
 zstyle ':completion:*:*:kill:*'             force-list          always
 zstyle ':completion:*:*:kill:*'             insert-ids          single
 
 # Configure completion of 'man' command.
-zstyle ':completion:*:man:*'                menu                yes select
 zstyle ':completion:*:manuals'              separate-sections   yes
 zstyle ':completion:*:manuals.*'            insert-sections     yes
 
