@@ -43,7 +43,8 @@ sketchybar --add item front_app left \
 # --- Right side (added right-to-left) -----------------------------------------
 sketchybar --add item clock right \
            --set clock update_freq=10 icon=󰃰 icon.color=$BLUE \
-                 script="$PLUGIN_DIR/clock.sh"
+                 script="$PLUGIN_DIR/clock.sh" \
+                 click_script="$PLUGIN_DIR/itsycal.sh"
 
 sketchybar --add item battery right \
            --subscribe battery system_woke power_source_change \
