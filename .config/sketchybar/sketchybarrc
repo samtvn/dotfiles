@@ -8,16 +8,24 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 AEROSPACE=/opt/homebrew/bin/aerospace
 FONT="Monaspace Argon NF"
 
-sketchybar --bar position=top height=34 color=$BAR_COLOR blur_radius=30 \
-                 padding_left=8 padding_right=8
+# Match the notch band height so the bar fills it exactly (56px on this MacBook
+# at native resolution); fall back to 34px on screens without a notch.
+BAR_HEIGHT=$(osascript -l JavaScript -e '
+  ObjC.import("AppKit"); let h = 0; const s = $.NSScreen.screens;
+  for (let i = 0; i < s.count; i++) h = Math.max(h, s.objectAtIndex(i).safeAreaInsets.top);
+  Math.round(h)' 2>/dev/null)
+(( BAR_HEIGHT >= 30 )) || BAR_HEIGHT=34
 
-sketchybar --default icon.font="$FONT:Bold:14.0" \
-                     label.font="$FONT:Medium:13.0" \
+sketchybar --bar position=top height=$BAR_HEIGHT color=$BAR_COLOR blur_radius=30 \
+                 padding_left=10 padding_right=10
+
+sketchybar --default icon.font="$FONT:Bold:16.0" \
+                     label.font="$FONT:Medium:15.0" \
                      icon.color=$TEXT label.color=$TEXT \
                      padding_left=3 padding_right=3 \
                      icon.padding_left=6 icon.padding_right=3 \
                      label.padding_left=3 label.padding_right=6 \
-                     background.corner_radius=7 background.height=24
+                     background.corner_radius=8 background.height=$(( BAR_HEIGHT * 6 / 10 ))
 
 # --- AeroSpace workspaces -----------------------------------------------------
 # AeroSpace triggers this event on every workspace switch (see aerospace.toml)
@@ -27,7 +35,7 @@ for sid in $($AEROSPACE list-workspaces --all); do
   sketchybar --add item "space.$sid" left \
              --subscribe "space.$sid" aerospace_workspace_change front_app_switched space_windows_change \
              --set "space.$sid" icon="$sid" \
-                   label.font="sketchybar-app-font:Regular:14.0" label.y_offset=-1 \
+                   label.font="sketchybar-app-font:Regular:17.0" label.y_offset=-1 \
                    background.drawing=on background.color=$SURFACE \
                    click_script="$AEROSPACE workspace $sid" \
                    script="$PLUGIN_DIR/aerospace.sh"
@@ -36,7 +44,7 @@ done
 # --- Focused app --------------------------------------------------------------
 sketchybar --add item front_app left \
            --subscribe front_app front_app_switched \
-           --set front_app icon.font="sketchybar-app-font:Regular:14.0" \
+           --set front_app icon.font="sketchybar-app-font:Regular:17.0" \
                  icon.color=$ACCENT label.color=$SUBTEXT padding_left=10 \
                  script="$PLUGIN_DIR/front_app.sh"
 

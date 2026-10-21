@@ -40,9 +40,9 @@ inner.horizontal = 8
 inner.vertical = 8
 outer.left = 8
 outer.right = 8
-# Leave room for SketchyBar (34px). The built-in screen keeps the notch band
-# reserved, so the bar already sits above the windows there.
-outer.top = [{ monitor.'built-in' = 8 }, 42]
+# Leave room for SketchyBar on external monitors (bar is 56px + 8px gap).
+# The built-in screen keeps the notch band reserved, so windows already start below the bar.
+outer.top = [{ monitor.'built-in' = 8 }, 64]
 outer.bottom = 8
 
 [mode.main.binding]
