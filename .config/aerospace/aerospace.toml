@@ -11,7 +11,7 @@ config-version = 2
 
 start-at-login = true
 
-# Workspaces that always exist (SketchyBar builds its list from these)
+# Workspaces that always exist
 persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 # Tidy up nested containers automatically
@@ -27,11 +27,6 @@ default-root-container-orientation = 'auto'
 # Mouse follows focus when switching monitors
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
-# Tell SketchyBar which workspace is focused (see ~/.config/sketchybar)
-exec-on-workspace-change = ['/bin/bash', '-c',
-  '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-]
-
 [key-mapping]
 preset = 'qwerty'
 
@@ -40,9 +35,7 @@ inner.horizontal = 8
 inner.vertical = 8
 outer.left = 8
 outer.right = 8
-# Leave room for SketchyBar on external monitors (bar is 56px + 8px gap).
-# The built-in screen keeps the notch band reserved, so windows already start below the bar.
-outer.top = [{ monitor.'built-in' = 8 }, 64]
+outer.top = 8
 outer.bottom = 8
 
 [mode.main.binding]
