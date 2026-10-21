@@ -15,5 +15,5 @@ export YELLOW=0xffeed49f
 export PEACH=0xfff5a97f
 export RED=0xffed8796
 
-export BAR_COLOR=0xcc1e2030 # mantle, slightly transparent
+export BAR_COLOR=0x00000000 # fully transparent, like the macOS menu bar
 export ACCENT=$MAUVE        # focused workspace

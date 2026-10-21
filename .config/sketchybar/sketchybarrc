@@ -16,7 +16,7 @@ BAR_HEIGHT=$(osascript -l JavaScript -e '
   Math.round(h)' 2>/dev/null)
 (( BAR_HEIGHT >= 30 )) || BAR_HEIGHT=34
 
-sketchybar --bar position=top height=$BAR_HEIGHT color=$BAR_COLOR blur_radius=30 \
+sketchybar --bar position=top height=$BAR_HEIGHT color=$BAR_COLOR blur_radius=0 \
                  padding_left=10 padding_right=10
 
 sketchybar --default icon.font="$FONT:Bold:16.0" \
