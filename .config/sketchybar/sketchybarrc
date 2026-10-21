@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# SketchyBar — https://felixkratz.github.io/SketchyBar/
+# Left: AeroSpace workspaces (with app icons) and the focused app.
+# Right: clock, battery, volume, CPU.
+
+source "$CONFIG_DIR/colors.sh"
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+AEROSPACE=/opt/homebrew/bin/aerospace
+FONT="Monaspace Argon NF"
+
+sketchybar --bar position=top height=34 color=$BAR_COLOR blur_radius=30 \
+                 padding_left=8 padding_right=8
+
+sketchybar --default icon.font="$FONT:Bold:14.0" \
+                     label.font="$FONT:Medium:13.0" \
+                     icon.color=$TEXT label.color=$TEXT \
+                     padding_left=3 padding_right=3 \
+                     icon.padding_left=6 icon.padding_right=3 \
+                     label.padding_left=3 label.padding_right=6 \
+                     background.corner_radius=7 background.height=24
+
+# --- AeroSpace workspaces -----------------------------------------------------
+# AeroSpace triggers this event on every workspace switch (see aerospace.toml)
+sketchybar --add event aerospace_workspace_change
+
+for sid in $($AEROSPACE list-workspaces --all); do
+  sketchybar --add item "space.$sid" left \
+             --subscribe "space.$sid" aerospace_workspace_change front_app_switched space_windows_change \
+             --set "space.$sid" icon="$sid" \
+                   label.font="sketchybar-app-font:Regular:14.0" label.y_offset=-1 \
+                   background.drawing=on background.color=$SURFACE \
+                   click_script="$AEROSPACE workspace $sid" \
+                   script="$PLUGIN_DIR/aerospace.sh"
+done
+
+# --- Focused app --------------------------------------------------------------
+sketchybar --add item front_app left \
+           --subscribe front_app front_app_switched \
+           --set front_app icon.font="sketchybar-app-font:Regular:14.0" \
+                 icon.color=$ACCENT label.color=$SUBTEXT padding_left=10 \
+                 script="$PLUGIN_DIR/front_app.sh"
+
+# --- Right side (added right-to-left) -----------------------------------------
+sketchybar --add item clock right \
+           --set clock update_freq=10 icon=󰃰 icon.color=$BLUE \
+                 script="$PLUGIN_DIR/clock.sh"
+
+sketchybar --add item battery right \
+           --subscribe battery system_woke power_source_change \
+           --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh"
+
+sketchybar --add item volume right \
+           --subscribe volume volume_change \
+           --set volume icon.color=$PEACH script="$PLUGIN_DIR/volume.sh"
+
+sketchybar --add item cpu right \
+           --set cpu update_freq=5 icon=󰻠 icon.color=$GREEN \
+                 script="$PLUGIN_DIR/cpu.sh"
+
+sketchybar --update
