@@ -66,4 +66,24 @@ sketchybar --add item cpu right \
            --set cpu update_freq=5 icon=󰻠 icon.color=$GREEN \
                  script="$PLUGIN_DIR/cpu.sh"
 
+# --- Menu bar apps --------------------------------------------------------------
+# Click opens the app's real menu. Format: "process name|icon|font"
+# (app = sketchybar-app-font glyph name, nerd = Nerd Font glyph)
+MENU_APPS=(
+  "Shottr|󰄀|nerd"
+  "LuLu|:lulu:|app"
+  "WireGuard|:wireguard:|app"
+  "OrbStack|:orbstack:|app"
+  "1Password|:one_password:|app"
+)
+for entry in "${MENU_APPS[@]}"; do
+  IFS='|' read -r app icon font <<<"$entry"
+  if [[ $font == app ]]; then icon_font="sketchybar-app-font:Regular:17.0"; else icon_font="$FONT:Bold:16.0"; fi
+  item="menu.${app// /_}"
+  sketchybar --add item "$item" right \
+             --set "$item" icon="$icon" icon.font="$icon_font" icon.color=$SUBTEXT \
+                   label.drawing=off padding_left=1 padding_right=1 \
+                   click_script="$PLUGIN_DIR/menu_click.sh '$app'"
+done
+
 sketchybar --update
