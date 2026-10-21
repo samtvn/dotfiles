@@ -1,30 +1,59 @@
 {
-    "machine_specific": { "krbn-b7b7224e-a592-49cc-953f-65886137b84f": { "external_editor_path": "/Applications/Visual Studio Code.app" } },
+    "machine_specific": {
+        "krbn-b7b7224e-a592-49cc-953f-65886137b84f": {
+            "external_editor_path": "/Applications/Visual Studio Code.app"
+        }
+    },
     "profiles": [
         {
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Caps_lock alone is escape; command+caps_lock is caps_lock",
+                        "description": "Caps Lock: tap = Escape, hold = Hyper (Ctrl+Option+Cmd); Cmd+Caps Lock = Caps Lock",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "caps_lock",
                                     "modifiers": {
-                                        "mandatory": ["command"],
-                                        "optional": ["any"]
+                                        "mandatory": [
+                                            "command"
+                                        ],
+                                        "optional": [
+                                            "any"
+                                        ]
                                     }
                                 },
-                                "to": [{ "key_code": "caps_lock" }],
+                                "to": [
+                                    {
+                                        "key_code": "caps_lock"
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
-                                "to": [{ "key_code": "escape" }],
-                                "type": "basic"
+                                "to": [
+                                    {
+                                        "key_code": "left_control",
+                                        "modifiers": [
+                                            "left_option",
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic",
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "escape"
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -45,9 +74,17 @@
                                 ],
                                 "from": {
                                     "key_code": "grave_accent_and_tilde",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
-                                "to": [{ "key_code": "non_us_backslash" }],
+                                "to": [
+                                    {
+                                        "key_code": "non_us_backslash"
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
@@ -64,9 +101,17 @@
                                 ],
                                 "from": {
                                     "key_code": "non_us_backslash",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
-                                "to": [{ "key_code": "grave_accent_and_tilde" }],
+                                "to": [
+                                    {
+                                        "key_code": "grave_accent_and_tilde"
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
@@ -88,9 +133,17 @@
                                 ],
                                 "from": {
                                     "key_code": "grave_accent_and_tilde",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
-                                "to": [{ "key_code": "non_us_backslash" }],
+                                "to": [
+                                    {
+                                        "key_code": "non_us_backslash"
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
@@ -109,13 +162,17 @@
                                     "key_code": "non_us_backslash",
                                     "modifiers": {
                                         "mandatory": [],
-                                        "optional": ["caps_lock"]
+                                        "optional": [
+                                            "caps_lock"
+                                        ]
                                     }
                                 },
                                 "to": [
                                     {
                                         "key_code": "comma",
-                                        "modifiers": ["left_shift"]
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -135,14 +192,20 @@
                                 "from": {
                                     "key_code": "non_us_backslash",
                                     "modifiers": {
-                                        "mandatory": ["shift"],
-                                        "optional": ["caps_lock"]
+                                        "mandatory": [
+                                            "shift"
+                                        ],
+                                        "optional": [
+                                            "caps_lock"
+                                        ]
                                     }
                                 },
                                 "to": [
                                     {
                                         "key_code": "period",
-                                        "modifiers": ["left_shift"]
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -164,7 +227,9 @@
             ],
             "name": "Default profile",
             "selected": true,
-            "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
+            "virtual_hid_keyboard": {
+                "keyboard_type_v2": "iso"
+            }
         }
     ]
 }

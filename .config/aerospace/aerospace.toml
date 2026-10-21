@@ -1,0 +1,141 @@
+# AeroSpace tiling window manager — https://nikitabobko.github.io/AeroSpace/guide
+#
+# "Hyper" = hold Caps Lock (Karabiner maps it to Ctrl+Option+Cmd; tap still sends Esc).
+# Bindings below are written as cmd-alt-ctrl-<key>; add Shift for the second layer.
+#
+# Key names are physical US-QWERTY positions. On the Swiss keyboard the letters
+# h j k l n m b f r, the digits, comma and period are in the same place, so every
+# binding below uses only those.
+
+start-at-login = true
+
+# Tidy up nested containers automatically
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Accordion: how much of the hidden windows stays visible at the edge (px)
+accordion-padding = 60
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Mouse follows focus when switching monitors
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.right = 8
+outer.top = 8
+outer.bottom = 8
+
+[mode.main.binding]
+# Focus (Hyper + h/j/k/l) and move windows (Hyper + Shift + h/j/k/l)
+cmd-alt-ctrl-h = 'focus left'
+cmd-alt-ctrl-j = 'focus down'
+cmd-alt-ctrl-k = 'focus up'
+cmd-alt-ctrl-l = 'focus right'
+cmd-alt-ctrl-shift-h = 'move left'
+cmd-alt-ctrl-shift-j = 'move down'
+cmd-alt-ctrl-shift-k = 'move up'
+cmd-alt-ctrl-shift-l = 'move right'
+
+# Layouts: comma = accordion (big window, others peek at the edge), period = side by side
+cmd-alt-ctrl-comma = 'layout accordion horizontal vertical'
+cmd-alt-ctrl-period = 'layout tiles horizontal vertical'
+
+# Resize focused window: n = narrower, m = wider (repeat for 2/3, 3/4 ...), b = balance
+cmd-alt-ctrl-n = 'resize smart -100'
+cmd-alt-ctrl-m = 'resize smart +100'
+cmd-alt-ctrl-b = 'balance-sizes'
+
+# Fullscreen inside AeroSpace / toggle floating for the focused window
+cmd-alt-ctrl-f = 'fullscreen'
+cmd-alt-ctrl-shift-f = 'layout floating tiling'
+
+# Workspaces: Hyper + number to switch, Hyper + Shift + number to send the window there
+cmd-alt-ctrl-1 = 'workspace 1'
+cmd-alt-ctrl-2 = 'workspace 2'
+cmd-alt-ctrl-3 = 'workspace 3'
+cmd-alt-ctrl-4 = 'workspace 4'
+cmd-alt-ctrl-5 = 'workspace 5'
+cmd-alt-ctrl-6 = 'workspace 6'
+cmd-alt-ctrl-7 = 'workspace 7'
+cmd-alt-ctrl-8 = 'workspace 8'
+cmd-alt-ctrl-9 = 'workspace 9'
+cmd-alt-ctrl-shift-1 = 'move-node-to-workspace 1'
+cmd-alt-ctrl-shift-2 = 'move-node-to-workspace 2'
+cmd-alt-ctrl-shift-3 = 'move-node-to-workspace 3'
+cmd-alt-ctrl-shift-4 = 'move-node-to-workspace 4'
+cmd-alt-ctrl-shift-5 = 'move-node-to-workspace 5'
+cmd-alt-ctrl-shift-6 = 'move-node-to-workspace 6'
+cmd-alt-ctrl-shift-7 = 'move-node-to-workspace 7'
+cmd-alt-ctrl-shift-8 = 'move-node-to-workspace 8'
+cmd-alt-ctrl-shift-9 = 'move-node-to-workspace 9'
+
+# Jump back to the previous workspace; send the workspace to the other monitor
+cmd-alt-ctrl-tab = 'workspace-back-and-forth'
+cmd-alt-ctrl-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# Reload this file after editing it
+cmd-alt-ctrl-r = 'reload-config'
+
+# --- App placement -----------------------------------------------------------
+# 1 terminal · 2 browser · 3 code · 4 chat · 5 notes · 6-9 free
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.brave.Browser'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'org.mozilla.firefox'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'dev.vencord.vesktop'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 5'
+
+# Small utility windows float instead of being tiled
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.calculator'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.localsend.localsendApp'
+run = 'layout floating'
