@@ -19,6 +19,14 @@ if [[ $OSTYPE == darwin* ]]; then
 else
   # JetBrains Toolbox
   [[ -d $XDG_DATA_HOME/JetBrains/Toolbox/scripts ]] && path+=("$XDG_DATA_HOME/JetBrains/Toolbox/scripts")
+
+  # systemd user bus (systemctl --user, journalctl --user) when PAM did not set it, e.g. over SSH
+  if [[ -z $XDG_RUNTIME_DIR && -d /run/user/$UID ]]; then
+    export XDG_RUNTIME_DIR=/run/user/$UID
+  fi
+  if [[ -z $DBUS_SESSION_BUS_ADDRESS && -S $XDG_RUNTIME_DIR/bus ]]; then
+    export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
+  fi
 fi
 
 # Point Ghostty at this OS's config (only when the link is missing, so no work on normal startups)
