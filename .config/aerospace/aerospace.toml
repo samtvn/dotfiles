@@ -100,8 +100,11 @@ run = 'move-node-to-workspace 1'
 if.app-id = 'com.brave.Browser'
 run = 'move-node-to-workspace 2'
 
+# Only titled windows: the file picker has an empty title and must stay with its
+# parent window, otherwise clicking in it jumps to workspace 2.
 [[on-window-detected]]
 if.app-id = 'org.mozilla.firefox'
+if.window-title-regex-substring = '.'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
