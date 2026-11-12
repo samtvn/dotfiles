@@ -189,6 +189,11 @@ run = 'layout floating'
 if.app-id = 'com.apple.UserNotificationCenter'
 run = 'layout floating'
 
+# Someone's shared screen (FaceTime / Messages screen sharing viewer)
+[[on-window-detected]]
+if.app-id = 'com.apple.ScreenSharing'
+run = 'layout floating'
+
 # Finder "Get Info" panels and copy/move progress windows
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
